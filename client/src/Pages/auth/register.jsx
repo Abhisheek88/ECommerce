@@ -1,7 +1,9 @@
-import {Link} from "react-router-dom"
+import {Link, useNavigate} from "react-router-dom"
 import React, { useState } from 'react'
 import CommonForm from "../../components/common/form";
 import { registerFormControls } from "@/config";
+import {useDispatch} from 'react-redux';
+import { registerUser } from "../../store/auth-slice";
 
 const initialState = {
   userName: "",
@@ -9,12 +11,25 @@ const initialState = {
   password: "",
 };
 
-function onSubmit(){
-
-}
 
 function register() {
-const [formData, setFormData] = useState(initialState)
+  const [formData, setFormData] = useState(initialState)
+  const dispatch = useDispatch();
+  const navigate =useNavigate();
+
+
+  function onSubmit(){
+    event.preventDefault();
+    dispatch(registerUser(formData)).then((data)=>{
+
+      console.log(data);
+      
+    } )
+
+  }
+
+  console.log(formData);
+  
 
   return (
     <div className="mx-auto w-full max-w-md space-y-6">
@@ -46,4 +61,4 @@ const [formData, setFormData] = useState(initialState)
   )
 }
 
-export default register
+export default register;
